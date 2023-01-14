@@ -1,0 +1,32 @@
+Insert:
+public void insert(List<Point> p){
+root = insert(p, root, false, 0.0, 0.0, 1.0, 1.0);
+}
+private Node insert(Point point, Node node, boolean isVertical,
+double x0, double y0, double x1, double y1) {
+if (node == null) {
+return new Node(point, new Rect(x0, y0, x1, y1));
+}
+
+
+
+Range:
+public List<Point> range(Rectangle rectangle){
+LinkedList result = new LinkedList();
+range(rect, root, false, result);
+return result;
+}
+private void range(Rectangle rect, Node node, boolean isVertical, LinkedList bag) {
+if (node == null) return;
+isVertical = !isVertical;
+Point point = node.point;
+if (rect.contains(point)) bag.add(point);
+double value = isVertical ? point.x : point.y;
+
+double min = isVertical ? rect.minX : rect.minY;
+
+double max = isVertical ? rect.maxX : rect.maxY;
+if (min < value) {
+range(rect, node.left, isVertical, bag);
+}if (max >= value) {range(rect, node.right, isVertical, bag);}
+}
